@@ -24,8 +24,8 @@ An open-source solution for sending batch marketing emails via Google Workspace 
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/batch-email-system.git
-   cd batch-email-system
+   git clone https://github.com/jumpjumptoger007/batch-email.git
+   cd batch-email
    ```
 
 2. Install dependencies:
