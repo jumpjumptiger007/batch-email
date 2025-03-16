@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsubscribe from Marketing Emails</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .reason-group {
+            margin: 20px 0;
+        }
+        .checkbox-group {
+            margin: 10px 0;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            min-height: 100px;
+            box-sizing: border-box;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #388E3C;
+        }
+        .cancel-button {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .confirmation {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: #E8F5E9;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+        @media (max-width: 600px) {
+            .buttons {
+                flex-direction: column;
+            }
+            .button {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="/api/placeholder/150/50" alt="Company Logo" class="logo">
+            <h1>Email Preference Center</h1>
+            <p>We're sorry to see you go, but we respect your choice.</p>
+        </div>
+
+        <div id="unsubscribe-form">
+            <div class="form-group">
+                <label for="email">Please confirm your email address:</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+
+            <div class="reason-group">
+                <label>Please tell us why you're unsubscribing (optional):</label>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="too-many" name="reason" value="too-many">
+                    <label for="too-many">I receive too many emails</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="not-relevant" name="reason" value="not-relevant">
+                    <label for="not-relevant">The content is not relevant to me</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="never-signed" name="reason" value="never-signed">
+                    <label for="never-signed">I never signed up for these emails</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="other" name="reason" value="other">
+                    <label for="other">Other reason</label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="comments">Additional comments:</label>
+                    <textarea id="comments" name="comments" placeholder="Tell us how we can improve..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What would you prefer?</label>
+                
+                <div class="checkbox-group">
+                    <input type="radio" id="unsubscribe-all" name="preference" value="unsubscribe-all" checked>
+                    <label for="unsubscribe-all">Unsubscribe from all marketing emails</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="radio" id="less-frequent" name="preference" value="less-frequent">
+                    <label for="less-frequent">Receive less frequent emails (monthly digest only)</label>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="button cancel-button" onclick="window.history.back()">Cancel</button>
+                <button type="button" class="button" onclick="processUnsubscribe()">Confirm Unsubscribe</button>
+            </div>
+        </div>
+
+        <div id="confirmation" class="confirmation">
+            <h2>You've been unsubscribed</h2>
+            <p>Your email address has been removed from our marketing list. You'll no longer receive marketing emails from us.</p>
+            <p>It may take up to 48 hours for the change to take effect across all our systems.</p>
+            <p>If you have any questions, please contact <a href="mailto:support@example.com">support@example.com</a>.</p>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Your Company. All rights reserved.</p>
+            <p>123 Business Street, City, Country</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Pre-fill email from URL parameter if available
+        window.onload = function() {
+            var email = getUrlParameter('email');
+            if (email) {
+                document.getElementById('email').value = email;
+            }
+        };
+
+        // Process the unsubscribe action
+        function processUnsubscribe() {
+            var email = document.getElementById('email').value;
+            if (!email) {
+                alert('Please enter your email address');
+                return;
+            }
+
+            // In a real implementation, you would send this data to your server
+            // Here we're just simulating the process
+            
+            // Collect reasons
+            var reasons = [];
+            var checkboxes = document.querySelectorAll('input[name="reason"]:checked');
+            for (var i = 0; i < checkboxes.length; i++) {
+                reasons.push(checkboxes[i].value);
+            }
+            
+            var comments = document.getElementById('comments').value;
+            var preference = document.querySelector('input[name="preference"]:checked').value;
+            
+            // Here you would normally make an AJAX request to your server
+            // For this example, we'll just simulate a successful unsubscribe
+            
+            console.log('Unsubscribe request:', {
+                email: email,
+                reasons: reasons,
+                comments: comments,
+                preference: preference
+            });
+            
+            // Show confirmation
+            document.getElementById('unsubscribe-form').style.display = 'none';
+            document.getElementById('confirmation').style.display = 'block';
+            
+            // In a real implementation, you would redirect or show a confirmation based on the server response
+        }
+    </script>
+</body>
+</html>
