@@ -439,7 +439,7 @@ if __name__ == "__main__":
     subject_template = "Special Offer Inside! 🎁 {campaign_id}"
     
     # Path to your CSV file with recipient data
-    csv_path = "recipients.csv"
+    csv_path = "examples/recipients.csv"
     
     # Send batch emails using BCC method for marketing emails
     results = sender.send_batch_from_csv(

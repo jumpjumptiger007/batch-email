@@ -20,11 +20,29 @@ An open-source solution for sending batch marketing emails via Google Workspace 
 - Google Workspace account with SMTP access
 - App Password for your Google account (2-step verification required)
 
+## Included Example Files
+
+This repository includes several example files to help you get started:
+
+1. **`examples/recipients.csv`** - Sample recipient list with email addresses and personalization fields
+2. **`examples/filtered_output.csv`** - Pre-filtered version with only subscribed recipients
+3. **`email_subscribers.db`** - Example SQLite database with sample subscription data
+
+You can use these files to:
+- Test the system without creating your own data
+- Understand the expected file formats
+- Have a starting point for your own email marketing campaigns
+
+When you're ready for production use, you can:
+- Replace the example recipients with your actual marketing list
+- Use the scripts to maintain your own subscription database
+- Create custom email templates for your branding
+
 ## Installation
 
 1. Clone this repository:
    ```
-   git clone https://github.com/jumpjumptoger007/batch-email.git
+   git clone https://github.com/jumpjumptiger007/batch-email.git
    cd batch-email
    ```
 
@@ -33,12 +51,16 @@ An open-source solution for sending batch marketing emails via Google Workspace 
    pip install flask
    ```
 
-3. Set up the database:
+3. Use the example database or create your own:
    ```
+   # If you want to use the provided example database:
+   # The repository includes email_subscribers.db with sample data
+   
+   # Or create a new database:
    python create-database.py
    ```
 
-4. Create your email templates and recipient list CSV
+4. Create your email templates and use the provided example recipient lists
 
 ## System Components
 
@@ -59,13 +81,15 @@ sender = BatchEmailSender(
 
 # Send batch emails
 results = sender.send_batch_from_csv(
-    csv_path="recipients.csv",
+    # You can use either the original list or the pre-filtered list:
+    csv_path="examples/recipients.csv",  # Original list with 'subscribed' column
+    # csv_path="examples/filtered_output.csv",  # Pre-filtered list
     html_template=html_template,
     text_template=text_template,
     subject_template="Special Offer Inside! 🎁 {campaign_id}",
     use_bcc=True,
     batch_size=50,
-    check_unsubscribed=True
+    check_unsubscribed=True  # Set to False if using filtered_output.csv
 )
 
 print(f"Results: {results['success']} sent, {results['failed']} failed, {results['skipped']} unsubscribed")
@@ -85,11 +109,17 @@ python unsubscribe-handler.py
 Utilities for managing your subscriber database and keeping email lists in sync.
 
 ```
-# Import subscribers from a CSV
-python sync-subscribers.py --import your_list.csv
+# Import subscribers from the example CSV
+python sync-subscribers.py --import examples/recipients.csv
 
 # Create a filtered list excluding unsubscribed recipients
-python sync-subscribers.py --filter input.csv filtered_output.csv
+python sync-subscribers.py --filter examples/recipients.csv filtered_output.csv
+
+# Update the original CSV file with current subscription status
+python sync-subscribers.py --update examples/recipients.csv
+
+# One-step sync: Import new subscribers and update the CSV file
+python sync-subscribers.py --sync-all
 ```
 
 ### 4. Database Setup (`create-database.py`)
@@ -120,11 +150,14 @@ Create a CSV with at minimum these columns:
 - `first_name`: Recipient's first name (for personalization)
 - `last_name`: Recipient's last name (for personalization)
 
-Additional columns can be used for template variables:
+Additional columns can be used for template variables. You can use the sample file provided in the `examples/recipients.csv` as a starting point:
+
 ```csv
 email,first_name,last_name,campaign_id,marketing_message
 john.doe@example.com,John,Doe,SPRING2025,"Check out our spring collection with 20% off!"
 ```
+
+The repository includes a complete example CSV in the `examples` folder that you can use as a template for your own recipient lists.
 
 ### Creating Email Templates
 
@@ -152,22 +185,26 @@ HTML Template Example:
 ### Complete Workflow
 
 1. **Initial Setup**:
-   - Create the database
-   - Import your existing marketing list
-   - Set up the unsubscribe web service
+   - Use the included example database or create your own: `python create-database.py`
+   - If creating your own, import your marketing list: `python sync-subscribers.py --import examples/recipients.csv`
+   - Set up the unsubscribe web service: `python unsubscribe-handler.py`
 
-2. **Before Each Campaign**:
-   - Update your recipient CSV
-   - Create a filtered version excluding unsubscribed users
-   - Prepare your email templates
+2. **Before Each Campaign** (Important):
+   - Always run the sync command to update subscription status: `python sync-subscribers.py --sync-all`
+   - This step is critical as the CSV file won't automatically update when users unsubscribe
+   - The sync command ensures you don't send emails to people who have unsubscribed since your last campaign
+   - Alternatively, use the pre-filtered example: `examples/filtered_output.csv`
 
 3. **Sending the Campaign**:
-   - Run the batch email sender with your templates and filtered list
+   - Run the batch email sender with your templates and updated recipient list
+   - You can use the provided filtered example: `examples/filtered_output.csv`
+   - The sender will respect the 'subscribed' column in your CSV file
    - Monitor the logs for sending status
 
 4. **After Sending**:
    - Keep the unsubscribe service running to collect unsubscribe requests
    - Review unsubscribe reasons to improve future campaigns
+   - Next time you send a campaign, start again from step 2
 
 ## Unsubscribe Page Integration
 
