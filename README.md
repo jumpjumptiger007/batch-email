@@ -1,26 +1,26 @@
-# Batch Email Marketing System with Unsubscribe Management
+# 📧 Batch Email Marketing System with Unsubscribe Management
 
 An open-source solution for sending batch marketing emails via Google Workspace SMTP with proper unsubscribe handling, subscription tracking, and email list management. Built for marketers and developers who need a transparent, customizable email system that respects recipient preferences.
 
-## Features
+## ✨ Features
 
-- Send batch marketing emails using BCC for recipient privacy
-- Track and respect unsubscribe preferences
-- Professional unsubscribe page for recipients
-- Subscription database with reason tracking
-- Personalized unsubscribe links
-- Secure authentication with Google Workspace
-- Email template personalization
-- Rate limiting to avoid sending limits
-- CSV-based recipient management
+- 📤 Send batch marketing emails using BCC for recipient privacy
+- 🔄 Track and respect unsubscribe preferences
+- 🛑 Professional unsubscribe page for recipients
+- 💾 Subscription database with reason tracking
+- 🔗 Personalized unsubscribe links
+- 🔒 Secure authentication with Google Workspace
+- 🎨 Email template personalization
+- ⏱️ Rate limiting to avoid sending limits
+- 📋 CSV-based recipient management
 
-## Requirements
+## 🛠️ Requirements
 
 - Python 3.6+
 - Google Workspace account with SMTP access
 - App Password for your Google account (2-step verification required)
 
-## Included Example Files
+## 📂 Included Example Files
 
 This repository includes several example files to help you get started:
 
@@ -38,7 +38,7 @@ When you're ready for production use, you can:
 - Use the scripts to maintain your own subscription database
 - Create custom email templates for your branding
 
-## Installation
+## 🚀 Installation
 
 1. Clone this repository:
    ```
@@ -62,7 +62,7 @@ When you're ready for production use, you can:
 
 4. Create your email templates and use the provided example recipient lists
 
-## System Components
+## 🧩 System Components
 
 ### 1. Batch Email Sender (`batch-email-smtp.py`)
 
@@ -131,9 +131,9 @@ Sets up the SQLite database for tracking subscriptions and unsubscribe reasons.
 python create-database.py
 ```
 
-## Usage Guide
+## 📖 Usage Guide
 
-### Setting Up a Google App Password
+### 🔑 Setting Up a Google App Password
 
 Since you've enabled 2-step verification, you'll need an app password:
 
@@ -143,7 +143,7 @@ Since you've enabled 2-step verification, you'll need an app password:
 4. Select "Mail" and your device type
 5. Generate and copy the 16-character password
 
-### Preparing Your Email List
+### 📝 Preparing Your Email List
 
 Create a CSV with at minimum these columns:
 - `email`: Recipient email address
@@ -159,7 +159,7 @@ john.doe@example.com,John,Doe,SPRING2025,"Check out our spring collection with 2
 
 The repository includes a complete example CSV in the `examples` folder that you can use as a template for your own recipient lists.
 
-### Creating Email Templates
+### 📄 Creating Email Templates
 
 HTML Template Example:
 ```html
@@ -182,7 +182,7 @@ HTML Template Example:
 </html>
 ```
 
-### Complete Workflow
+### 🔄 Complete Workflow
 
 1. **Initial Setup**:
    - Use the included example database or create your own: `python create-database.py`
@@ -206,7 +206,7 @@ HTML Template Example:
    - Review unsubscribe reasons to improve future campaigns
    - Next time you send a campaign, start again from step 2
 
-## Unsubscribe Page Integration
+## 🚫 Unsubscribe Page Integration
 
 1. Make sure the unsubscribe web service is running
 2. In your email templates, include a personalized unsubscribe link:
@@ -215,7 +215,7 @@ HTML Template Example:
    ```
 3. The system will automatically replace `{email}` with each recipient's email
 
-## Best Practices
+## ✅ Best Practices
 
 - Always include a clear unsubscribe link in every email
 - Respect unsubscription requests promptly
@@ -224,7 +224,7 @@ HTML Template Example:
 - Add delays between batches to avoid hitting sending limits
 - Test with small batches before sending to your entire list
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Here's how you can help:
 
@@ -241,10 +241,10 @@ Contributions are welcome! Here's how you can help:
 - Improved analytics for tracking open/click rates
 - Localization of the unsubscribe page
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License.
 
-## Disclaimer
+## ⚠️ Disclaimer
 
 This software is provided as-is and should be used in compliance with email marketing laws and regulations, including but not limited to CAN-SPAM, GDPR, and CASL.
